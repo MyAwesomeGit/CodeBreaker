@@ -6,7 +6,12 @@ struct CodeBreaker {
     var masterCode: Code = Code(kind: .master)
     var guess: Code = Code(kind: .guess)
     var attempts: [Code] = []
-    let pegChoises: [Peg] = [.red, .green, .blue, .yellow]
+    let pegChoises: [Peg]
+    
+    init(pegChoises: [Peg] = [.red, .green, .blue, .yellow]) {
+        self.pegChoises = pegChoises
+        masterCode.randomize(from: pegChoises)
+    }
     
     mutating func attemptGuess() {
         var attempt = guess
@@ -27,7 +32,7 @@ struct CodeBreaker {
 
 struct Code {
     var kind: Kind
-    var pegs: [Peg] = [.green, .red, .red, .yellow]
+    var pegs: [Peg] = Array(repeating: Code.missing, count: 4)
     
     static let missing: Peg = .clear
     
@@ -36,6 +41,19 @@ struct Code {
         case guess
         case attempt([Match])
         case unknown
+    }
+    
+    mutating func randomize(from pegChoices: [Peg]) {
+        for index in pegChoices.indices {
+            pegs[index] = pegChoices.randomElement() ?? Code.missing
+        }
+    }
+    
+    var matches: [Match] {
+        switch kind {
+        case .attempt(let matches): return matches
+        default: return []
+        }
     }
     
     func match(against otherCode: Code) -> [Match] {
@@ -60,6 +78,6 @@ struct Code {
         
         return results
     }
-
+    
 }
 

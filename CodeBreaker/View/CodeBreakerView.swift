@@ -47,15 +47,22 @@ struct CodeBreakerView: View {
                         }
                     }
             }
-            MatchMakers(matches: code.matches)
+            Rectangle()
+                .foregroundStyle(Color.clear)
+                .aspectRatio(1, contentMode: .fit)
                 .overlay {
-                    if code.kind == .guess{
-                        guessButton
+                    if let matches = code.matches {
+                        MatchMakers(matches: matches)
+                    } else {
+                        if code.kind == .guess {
+                            guessButton
+                        }
                     }
                 }
         }
     }
 }
+
 
 #Preview {
     CodeBreakerView()

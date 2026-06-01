@@ -6,7 +6,7 @@ enum Match {
     case inexact
 }
 
-struct MatchMakers: View {
+struct MatchMakersView: View {
     var matches: [Match]
     
     var body: some View {
@@ -39,5 +39,5 @@ struct MatchMakers: View {
 }
 
 #Preview {
-    MatchMakers(matches: [.exact, .inexact, .exact, .nomatch])
+    MatchMakersView(matches: [.exact, .inexact, .exact, .nomatch])
 }

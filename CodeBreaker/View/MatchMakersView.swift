@@ -27,14 +27,14 @@ struct MatchMakersView: View {
         let foundCount: Int = matches.count { $0 != .nomatch}
         
         return Circle()
-                    .fill(exactCount > peg ? Color.primary : Color.clear)
-                    .strokeBorder(foundCount > peg ? Color.primary : Color.clear, lineWidth: 2)
-                    .aspectRatio(1, contentMode: .fit)
-                    .overlay(
-                        Circle()
-                            .stroke(Color.primary, lineWidth: 2)
-                    )
-                    .frame(width: 30, height: 30)
+            .fill(exactCount > peg ? Color.primary : Color.clear)
+            .strokeBorder(foundCount > peg ? Color.primary : Color.clear, lineWidth: 6)
+            .aspectRatio(1, contentMode: .fit)
+            .overlay(
+                Circle()
+                    .stroke(Color.primary, lineWidth: 2)
+            )
+            .frame(width: 30, height: 30)
     }
 }
 

@@ -14,9 +14,13 @@ struct Code {
     }
     
     mutating func randomize(from pegChoices: [Peg]) {
-        for index in pegChoices.indices {
+        for index in pegs.indices {
             pegs[index] = pegChoices.randomElement() ?? Code.missingPeg
         }
+    }
+    
+    mutating func reset() {
+        pegs = Array(repeating: Code.missingPeg, count: 4)
     }
     
     var matches: [Match]? {

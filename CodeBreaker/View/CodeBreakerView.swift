@@ -1,8 +1,11 @@
 import SwiftUI
 
 struct CodeBreakerView: View {
-    @State var game: CodeBreaker = CodeBreaker(pegChoises: [.brown, .yellow, .orange, .black])
+    // MARK: Data owned by me
+    @State private var game: CodeBreaker = CodeBreaker(pegChoises: [.brown, .yellow, .orange, .black])
+    @State private var selection: Int = 0
     
+    // MARK: - Body
     var body: some View {
         VStack {
             view(for: game.masterCode)
@@ -14,9 +17,15 @@ struct CodeBreakerView: View {
                     view(for: game.attempts[index])
                 }
             }
+            PegChooser(choices: game.pegChoises, onChoose: {peg in
+                game.setGuessPeg(peg, at: selection)
+                selection = (selection + 1) % game.masterCode.pegs.count
+            })
         }
         .padding()
     }
+    
+    
     
     var guessButton: some View {
         Button("Guess") {
@@ -24,29 +33,13 @@ struct CodeBreakerView: View {
                 game.attemptGuess()
             }
         }
-        .font(.system(size: 80))
-        .minimumScaleFactor(0.1)
+        .font(.system(size: GuessButton.maximumFontSize))
+        .minimumScaleFactor(GuessButton.scaleFactor)
     }
     
     func view(for code: Code) -> some View {
         HStack {
-            ForEach(code.pegs.indices, id: \.self) { index in
-                RoundedRectangle(cornerRadius: 10)
-                    .overlay {
-                        if code.pegs[index] == Code.missingPeg {
-                            RoundedRectangle(cornerRadius: 10)
-                                .strokeBorder(Color.gray)
-                        }
-                    }
-                    .contentShape(Rectangle())
-                    .aspectRatio(1, contentMode: .fit)
-                    .foregroundStyle(code.pegs[index])
-                    .onTapGesture {
-                        if code.kind == .guess {
-                            game.changeGuessPeg(at: index)
-                        }
-                    }
-            }
+            CodeView(code: code, selection: $selection)
             Rectangle()
                 .foregroundStyle(Color.clear)
                 .aspectRatio(1, contentMode: .fit)

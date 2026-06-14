@@ -1,18 +1,22 @@
-//
-//  PegChooser.swift
-//  CodeBreaker
-//
-//  Created by Vasily_1 on 14.06.2026.
-//
-
 import SwiftUI
 
 struct PegChooser: View {
+    // MARK: Data in
+    let choices: [Peg]
+    
+    // MARK: Data out function
+    let onChoose: ((Peg) -> Void)?
+    
+    // MARK: - Body
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            ForEach(choices, id: \.self) {peg in
+                Button {
+                    onChoose?(peg)
+                } label: {
+                    PegView(peg: peg)
+                }
+            }
+        }
     }
-}
-
-#Preview {
-    PegChooser()
 }

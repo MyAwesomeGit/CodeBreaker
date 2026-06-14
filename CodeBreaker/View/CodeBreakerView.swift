@@ -47,19 +47,7 @@ struct CodeBreakerView: View {
     
     func view(for code: Code) -> some View {
         HStack {
-            ForEach(code.pegs.indices, id: \.self) { index in
-                PegView(peg: code.pegs[index])
-                    .padding(Selection.border)
-                    .background{
-                        if selection == index, code.kind == .guess {
-                            Selection.shape
-                                .foregroundStyle(Color.gray.opacity(Selection.opacity))
-                        }
-                    }
-                    .onTapGesture {
-                        selection = index
-                    }
-            }
+            CodeView(code: code, selection: $selection)
             Rectangle()
                 .foregroundStyle(Color.clear)
                 .aspectRatio(1, contentMode: .fit)

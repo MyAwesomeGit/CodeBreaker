@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct CodeBreakerView: View {
-    // Mark: Data owned by me
+    // MARK: Data owned by me
     @State var game: CodeBreaker = CodeBreaker(pegChoises: [.brown, .yellow, .orange, .black])
     
     
-    // Mark: - Body
+    // MARK: - Body
     var body: some View {
         VStack {
             view(for: game.masterCode)

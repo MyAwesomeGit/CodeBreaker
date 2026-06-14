@@ -2,10 +2,10 @@ import SwiftUI
 
 
 struct PegView: View {
-    // Mark: Data in
+    // MARK: Data in
     let peg: Peg
     
-    // Mark: - Body
+    // MARK: - Body
     let pegShape = RoundedRectangle(cornerRadius: 10)
     
     var body: some View {

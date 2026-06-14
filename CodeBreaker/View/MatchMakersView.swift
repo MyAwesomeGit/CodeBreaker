@@ -7,10 +7,10 @@ enum Match {
 }
 
 struct MatchMakersView: View {
-    // Mark: Data in
+    // MARK: Data in
     let matches: [Match]
     
-    // Mark: - Body
+    // MARK: - Body
     var body: some View {
         HStack {
             VStack {

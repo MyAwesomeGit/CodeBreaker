@@ -4,7 +4,7 @@ struct CodeBreakerView: View {
     // MARK: Data owned by me
     @State private var game: CodeBreaker = CodeBreaker(pegChoises: [.brown, .yellow, .orange, .black])
     @State private var selection: Int = 0
-
+    
     // MARK: - Body
     var body: some View {
         VStack {
@@ -40,19 +40,19 @@ struct CodeBreakerView: View {
                 game.attemptGuess()
             }
         }
-        .font(.system(size: 80))
-        .minimumScaleFactor(0.1)
+        .font(.system(size: GuessButton.maximumFontSize))
+        .minimumScaleFactor(GuessButton.scaleFactor)
     }
     
     func view(for code: Code) -> some View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { index in
                 PegView(peg: code.pegs[index])
-                    .padding(6)
+                    .padding(Selection.border)
                     .background{
                         if selection == index, code.kind == .guess {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundStyle(Color.gray.opacity(0.5))
+                            Selection.shape
+                                .foregroundStyle(Color.gray.opacity(Selection.opacity))
                         }
                     }
                     .onTapGesture {

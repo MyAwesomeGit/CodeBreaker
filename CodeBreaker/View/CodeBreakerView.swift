@@ -2,9 +2,9 @@ import SwiftUI
 
 struct CodeBreakerView: View {
     // MARK: Data owned by me
-    @State var game: CodeBreaker = CodeBreaker(pegChoises: [.brown, .yellow, .orange, .black])
-    
-    
+    @State private var game: CodeBreaker = CodeBreaker(pegChoises: [.brown, .yellow, .orange, .black])
+    @State private var selection: Int = 0
+
     // MARK: - Body
     var body: some View {
         VStack {
@@ -17,8 +17,21 @@ struct CodeBreakerView: View {
                     view(for: game.attempts[index])
                 }
             }
+            pegChooser
         }
         .padding()
+    }
+    
+    var pegChooser: some View {
+        HStack {
+            ForEach(game.pegChoises, id: \.self) {peg in
+                Button {
+                    game.setGuessPeg(peg, at: selection)
+                } label: {
+                    PegView(peg: peg)
+                }
+            }
+        }
     }
     
     var guessButton: some View {
@@ -35,10 +48,15 @@ struct CodeBreakerView: View {
         HStack {
             ForEach(code.pegs.indices, id: \.self) { index in
                 PegView(peg: code.pegs[index])
-                    .onTapGesture {
-                        if code.kind == .guess {
-                            game.changeGuessPeg(at: index)
+                    .padding(6)
+                    .background{
+                        if selection == index, code.kind == .guess {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundStyle(Color.gray.opacity(0.5))
                         }
+                    }
+                    .onTapGesture {
+                        selection = index
                     }
             }
             Rectangle()

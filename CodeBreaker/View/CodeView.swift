@@ -18,6 +18,9 @@ struct CodeView: View {
                             .foregroundStyle(Color.gray.opacity(Selection.opacity))
                     }
                 }
+                .overlay {
+                    Selection.shape.foregroundStyle(code.isHidden ? Color.gray : Color.clear)
+                }
                 .onTapGesture {
                     selection = index
                 }

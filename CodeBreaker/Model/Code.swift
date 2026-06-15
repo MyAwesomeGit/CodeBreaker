@@ -3,11 +3,17 @@ import SwiftUI
 struct Code {
     var kind: Kind
     var pegs: [Peg] = Array(repeating: Code.missingPeg, count: 4)
+    var isHidden: Bool {
+        switch kind {
+        case .master(let isHidden): return isHidden
+        default: return false
+        }
+    }
     
     static let missingPeg: Peg = .clear
     
     enum Kind: Equatable {
-        case master
+        case master(isHidden: Bool)
         case guess
         case attempt([Match])
         case unknown
